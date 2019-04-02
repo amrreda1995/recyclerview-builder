@@ -37,7 +37,7 @@ allprojects {
 Add the **dependency**:
 ```groovy
 dependencies {
-  implementation 'com.github.amrreda1995:RecyclerviewBuilder:1.0.2'
+  implementation 'com.github.amrreda1995:RecyclerviewBuilder:1.0.0'
 }
 ```
 ### Without Jitpack
