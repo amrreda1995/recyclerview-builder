@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity() {
 }
 ```
 
-The Live Data is of type "ViewItemsObserver" class which accepts two parameters clearsOnSet (Boolean), and the viewItems (arrayList). If you'd like to clear the items each time you set a value for the live data; you set clearsOnSet to true, otherwise just leave it to default value which is false and it appends the added value
+The Live Data is of type "ViewItemsObserver" class which accepts two parameters; viewItemsArrayList (ArrayList) and clearsOnSet (Boolean). If you'd like to clear the items each time you set a value for the live data; you set clearsOnSet to true, otherwise just leave it to default value which is false and it appends the added value
 
 ## Using Normal Arrays
 
@@ -170,7 +170,7 @@ class MainActivity : AppCompatActivity() {
 
 ## **Example project**
 
-  * Clone the repo using `git clone https://github.com/amrreda1995/RecyclerviewBuilder.git`
+  * Clone the repo using `git clone https://github.com/amrreda1995/recyclerview-builder.git
   * Navigate to the cloned folder
   * Open in in the android studio
   * Build and run to see it in action (It also includes multiple view items if you want to expirement around with it!)
