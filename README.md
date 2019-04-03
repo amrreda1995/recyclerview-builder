@@ -177,7 +177,7 @@ class MainActivity : AppCompatActivity() {
 
 ## About RecyclerViewBuilder
 
-Initially, I just wanted to use a library that encapuslates all of this logic and of course I've found more than one. But I asked myslef why not make a library for myself ? And also deliver it for everyone to use (Because boilerplate code is boring, am I right?).
+Initially, I just wanted to use a library that encapuslates all of this logic and of course I've found more than one. But I asked myself why not make a library for myself ? And also deliver it for everyone to use (Because boilerplate code is boring, am I right?).
 
 Also RecyclerViewBuilder is built completely in code, no external libraries. It's highly flexible and can be customized easily with minimum effort.
 
