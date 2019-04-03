@@ -170,7 +170,7 @@ class MainActivity : AppCompatActivity() {
 
 ## **Example project**
 
-  * Clone the repo using `git clone https://github.com/amrreda1995/recyclerview-builder.git
+  * Clone the repo using `git clone https://github.com/amrreda1995/recyclerview-builder.git`
   * Navigate to the cloned folder
   * Open in in the android studio
   * Build and run to see it in action (It also includes multiple view items if you want to expirement around with it!)
