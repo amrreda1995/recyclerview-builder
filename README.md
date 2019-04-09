@@ -13,11 +13,14 @@ In short, you simply implement some interfaces and your recycler view will be up
 
 If you end up using RecyclerViewBuilder in production, I'd love to hear from you. You can reach me through [email](mailto:amr.reda151@gmail.com)
 
+## Changelogs
+[v1.1.0](https://github.com/amrreda1995/RecyclerviewBuilder/issues/new)
+
 ## Preview
 
-| Final Result |
-| ---- |
-| <img src="https://i.ibb.co/fQ4LHfC/preview-min.png" width="250"/> |
+| Final Result | Header | Footer |
+| ---- | ---- | ---- |
+| <img src="https://i.ibb.co/fQ4LHfC/preview-min.png" width="250"/> | <img src="https://i.ibb.co/Tt7n77L/device-2019-04-09-131734-min.png" width="250"/> | <img src="https://i.ibb.co/F7S3SPk/device-2019-04-09-131757-min.png" width="250"/> |
 
 ## Installation
 
@@ -37,7 +40,7 @@ allprojects {
 Add the **dependency**:
 ```groovy
 dependencies {
-  implementation 'com.github.amrreda1995:recyclerview-builder:1.0.0'
+  implementation 'com.github.amrreda1995:recyclerview-builder:1.1.0'
 }
 ```
 ### Without Jitpack
@@ -52,6 +55,8 @@ Clone the repo and copy the recycler view builder files into your project.
 * Different states for recycler view (empty views, loading views)
 * Execute a block of code when updating adapter is finished
 * If you decide to use live data; the builder is by default life cycle aware
+* Header / Footer items
+* DataBinding
 
 ## Usage
 
@@ -62,33 +67,90 @@ Clone the repo and copy the recycler view builder files into your project.
 
 ```kotlin
 class Product(val title: String, val date: String): ViewItemRepresentable {
-    override val viewItem: ViewItem<ViewItemRepresentable>
+    override val viewItem: AbstractViewItem<ViewItemRepresentable>
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 }
 ```
+
 ### This leads us to the next step which is view items
+
+* Now we have two routes to take, either use normal ViewItems or BindingViewItems
+
+**Using ViewItem**
 
 * Create a class which implements ViewItem<ViewItemRepresentable> and pass the model which we created in the previous step, also pass the layout id, the model from the constructor to the interface constructor and finally implement the bind function of the interface
 
 ```kotlin
 class ProductViewItem(private val model: Product) : ViewItem<ViewItemRepresentable>(R.layout.item_product, model) {
-    override fun bind(itemView: View) {
+    override fun bind(itemView: View, viewItemPosition: Int) {
         itemView.titleTextView.text = model.title
         itemView.dateTextView.text = model.date
     }
 }
 ```
 
+**Using BindingViewItem**
+
+* Create a class which implements BindingViewItem<ViewItemRepresentable, ViewDataBinding> and pass the model which we created in the previous step, also pass the layout id, the model from the constructor to the interface constructor. The second generic parameter is of type ViewDataBinding, which is the class that is automtically generated when you enable dataBinding and create an XML built over DataBinding.
+Given that you have created an XML named "item_product" the generated class name will be "ItemProductBinding"
+
+```kotlin
+class ProductViewItem(private val model: Product) : BindingViewItem<ViewItemRepresentable, ItemProductBinding>(R.layout.item_product, model) {
+    override fun bind(binding: ItemProductBinding, viewItemPosition: Int) {
+        binding.model = model
+    }
+}
+```
+
+**Or create a ViewItem (for header or footer) which has no implementation and to be used directly without the next step**
+
+```kotlin
+class FooterViewItem : ViewItem<ViewItemRepresentable>(R.layout.item_footer)
+```
+
+```kotlin
+class FooterViewItem : BindingViewItem<ViewItemRepresentable, SomeBindingClass>(R.layout.item_footer)
+```
+
 * Now, go back to your original model and return this view item on the overriden viewItem variable
 
 ```kotlin
 class Product(val title: String, val date: String): ViewItemRepresentable {
-    override val viewItem: ViewItem<ViewItemRepresentable>
+    override val viewItem: AbstractViewItem<ViewItemRepresentable>
         get() = ProductViewItem(this)
 }
 ```
 
 * Now you are ready to use the builder and you have two routes either use LiveData or normal arrays.
+
+## Using DataBinding
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var recyclerViewBuilder: RecyclerViewBuilder
+
+    private val viewItems = MutableLiveData<ViewItemsObserver>()
+
+    private var models = arrayListOf(
+        Product("Product one", "2/4/2019"),
+        Product("Product two", "2/4/2019"),
+        Product("Product three", "2/4/2019"),
+        Product("Product four", "2/4/2019")
+    )
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        recyclerViewBuilder = RecyclerViewBuilderFactory(recyclerView)
+            .buildWithLinearLayout(isDataBindingEnabled = true)
+            .bindViewItems(lifecycle, viewItems)
+
+        viewItems.value = ViewItemsObserver(ArrayList(models.map { it.viewItem }), false)
+    }
+}
+```
 
 ## Using Live Data
 
@@ -151,29 +213,32 @@ class MainActivity : AppCompatActivity() {
 
 | Function        | Description      |
 | ------------- |-------------|
-| buildWithLinearLayout      | A function that accepts orientation and reverselayout parameters and builds the linear layout recycler view     |
-| buildWithGridLayout     | A function that accepts columnCount, orientation and reverselayout parameters and builds the grid layout recycler view     |
+| buildWithLinearLayout      | A function that accepts isDataBindingEnabled, orientation and reverselayout parameters and builds the linear layout recycler view     |
+| buildWithGridLayout     | A function that accepts isDataBindingEnabled, columnCount, orientation and reverselayout parameters and builds the grid layout recycler view     |
 | setEmptyView      | A function that accepts a view which is used as a placeholder when the recycler view is empty     |
 | setLoadingView     | A function that accepts a view which is used as a placeholder when the recycler view is in loading state     |
 | startLoading      |  A function that manually triggers loading state on   |
 | finishLoading      | A function that manually triggers loading state off    |
 | isLoading      | A function which returns whether the recycler view is in loading state     |
 | setViewItems      | A function that accepts viewItemsArrayList and clearsOnSet parameters and either replaces the items or appends them     |
-| bindViewItems      | A function that accepts lifecycle of the owner view and viewItems of type MutableLiveData<ViewItemsObserver> as explained previously     |
+| bindViewItems      | A function that accepts lifecycleOwner and viewItems of type MutableLiveData<ViewItemsObserver> as explained previously     |
 | notifyDataSetChanged      | A function that reloads the recycler view manually     |
 | setEmptyAdapter      | A function that manually clears the recycler view    |
 | setOnItemClick      | A function that accepts a lambda function which has three paramaters (itemView, model, position)   |
 | setOnItemLongClick      |  A function that accepts a lambda function which has three paramaters (itemView, model, position)    |
 | onUpdatingAdapterFinished     |  A function that acceps a lambda and is invoked once the adapter has been filled with the items    |
-| setPaginationFeatureEnabled     |   A function that either enables or disables pagination feature   |
+| setPaginationEnabled     |   A function that either enables or disables pagination feature   |
 | onPaginate     |  A function that accepts a lambda which is triggered once the recylcer view has reached its end to trigger pagination (given that pagination feature is enabled)    |
+| setHeader     |  A function that accepts a view item and always sets it as the first item no matter how many items are added or removed    |
+| setFooter     |  A function that accepts a view item and always sets it as the last item no matter how many items are added or removed    |
 
 ## **Example project**
 
   * Clone the repo using `git clone https://github.com/amrreda1995/recyclerview-builder.git`
   * Navigate to the cloned folder
   * Open it in the android studio
-  * Build and run to see it in action (It also includes multiple view items if you want to expirement around with it!)
+  * Build and run to see it in action (It also includes multiple view items if you want to expirement around with it!
+
 
 ## About RecyclerViewBuilder
 
@@ -189,3 +254,4 @@ Please, don't hesitate to [file an issue](https://github.com/amrreda1995/Recycle
 ## License
 
 RecyclerViewBuilder is released under the MIT license. [See LICENSE](https://github.com/amrreda1995/RecyclerviewBuilder/blob/master/LICENSE) for details.
+
