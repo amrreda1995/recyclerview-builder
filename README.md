@@ -7,6 +7,7 @@ RecyclerViewBuilder is built over:
 * Factory design pattern
 * Builder design pattern
 * Live data (or not)
+* DataBinding (or not)
 * And lots of abstraction
 
 In short, you simply implement some interfaces and your recycler view will be up on the screen with zero effort.
