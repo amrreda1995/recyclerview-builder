@@ -1,5 +1,8 @@
 package com.recyclerviewbuilder.sample.models
 
+import androidx.databinding.ViewDataBinding
+import com.recyclerviewbuilder.library.AbstractViewItem
+import com.recyclerviewbuilder.library.BindingViewItem
 import com.recyclerviewbuilder.library.ViewItem
 import com.recyclerviewbuilder.library.ViewItemRepresentable
 import com.recyclerviewbuilder.sample.R

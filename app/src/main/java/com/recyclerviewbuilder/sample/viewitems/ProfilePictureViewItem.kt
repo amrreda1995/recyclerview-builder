@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.item_change_profile_picture.view.*
 class ProfilePictureViewItem(
     private val model: ProfilePicture
 ) : ViewItem<ViewItemRepresentable>(R.layout.item_change_profile_picture, model) {
-    override fun bind(itemView: View) {
+    override fun bind(itemView: View, viewItemPosition: Int) {
         itemView.userName.text = model.user.name
         itemView.time.text = model.time
 

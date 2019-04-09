@@ -5,9 +5,10 @@ import androidx.recyclerview.widget.RecyclerView
 
 class LinearRecyclerViewBuilder(
     recyclerView: RecyclerView,
+    isDataBindingEnabled: Boolean,
     orientation: Int? = null,
     reverseLayout: Boolean? = null
-) : RecyclerViewBuilder(recyclerView, orientation, reverseLayout) {
+) : RecyclerViewBuilder(recyclerView, isDataBindingEnabled, orientation, reverseLayout) {
 
     init {
         val layoutManager = LinearLayoutManager(recyclerView.context)

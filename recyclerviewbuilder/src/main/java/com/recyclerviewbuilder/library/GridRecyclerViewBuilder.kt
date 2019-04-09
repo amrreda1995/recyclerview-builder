@@ -5,10 +5,11 @@ import androidx.recyclerview.widget.RecyclerView
 
 class GridRecyclerViewBuilder(
     recyclerView: RecyclerView,
+    isDataBindingEnabled: Boolean,
     columnCount: Int,
     orientation: Int? = null,
     reverseLayout: Boolean? = null
-) : RecyclerViewBuilder(recyclerView, orientation, reverseLayout) {
+) : RecyclerViewBuilder(recyclerView, isDataBindingEnabled, orientation, reverseLayout, columnCount) {
 
     init {
         val layoutManager = GridLayoutManager(recyclerView.context, columnCount)

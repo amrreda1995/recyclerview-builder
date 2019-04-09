@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.item_image_and_content.view.*
 class ImageAndContentViewItem(
     private val model: ImageAndContent
 ) : ViewItem<ViewItemRepresentable>(R.layout.item_image_and_content, model) {
-    override fun bind(itemView: View) {
+    override fun bind(itemView: View, viewItemPosition: Int) {
         itemView.userName.text = model.user.name
         itemView.time.text = model.time
         itemView.content.text = model.content

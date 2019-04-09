@@ -34,7 +34,7 @@ fun RecyclerView.addScrollListenerForPagination(
                         }
                     }
                 }
-            } ?: kotlin.run {
+            } ?: run {
                 if (!recyclerView.canScrollVertically(direction)) {
                     block()
                 }
