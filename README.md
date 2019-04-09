@@ -91,8 +91,16 @@ class ProductViewItem(private val model: Product) : ViewItem<ViewItemRepresentab
 ```
 
 **Using BindingViewItem**
+* First, enable databinding in your android studio
+```groovy
+android {
+    dataBinding {
+        enabled = true
+    }
+}
+```
 
-* Create a class which implements BindingViewItem<ViewItemRepresentable, ViewDataBinding> and pass the model which we created in the previous step, also pass the layout id, the model from the constructor to the interface constructor. The second generic parameter is of type ViewDataBinding, which is the class that is automtically generated when you enable dataBinding and create an XML built over DataBinding.
+* Then, create a class which implements BindingViewItem<ViewItemRepresentable, ViewDataBinding> and pass the model which we created in the previous step, also pass the layout id, the model from the constructor to the interface constructor. The second generic parameter is of type ViewDataBinding, which is the class that is automtically generated when you enable dataBinding and create an XML built over DataBinding.
 Given that you have created an XML named "item_product" the generated class name will be "ItemProductBinding"
 
 ```kotlin
