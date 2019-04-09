@@ -145,7 +145,7 @@ class MainActivity : AppCompatActivity() {
 
         recyclerViewBuilder = RecyclerViewBuilderFactory(recyclerView)
             .buildWithLinearLayout(isDataBindingEnabled = true)
-            .bindViewItems(lifecycle, viewItems)
+            .bindViewItems(this, viewItems)
 
         viewItems.value = ViewItemsObserver(ArrayList(models.map { it.viewItem }), false)
     }
@@ -174,7 +174,7 @@ class MainActivity : AppCompatActivity() {
 
         recyclerViewBuilder = RecyclerViewBuilderFactory(recyclerView)
             .buildWithLinearLayout()
-            .bindViewItems(lifecycle, viewItems)
+            .bindViewItems(this, viewItems)
 
         viewItems.value = ViewItemsObserver(ArrayList(models.map { it.viewItem }), false)
     }
