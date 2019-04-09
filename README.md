@@ -14,7 +14,7 @@ In short, you simply implement some interfaces and your recycler view will be up
 If you end up using RecyclerViewBuilder in production, I'd love to hear from you. You can reach me through [email](mailto:amr.reda151@gmail.com)
 
 ## Changelogs
-[v1.1.0](https://github.com/amrreda1995/RecyclerviewBuilder/issues/new)
+[v1.1.0](https://github.com/amrreda1995/recyclerview-builder/blob/master/changelogs/Changelog-v1.1.0.md)
 
 ## Preview
 
