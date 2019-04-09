@@ -1,5 +1,6 @@
 package com.recyclerviewbuilder.sample.models
 
+import com.recyclerviewbuilder.library.AbstractViewItem
 import com.recyclerviewbuilder.library.ViewItem
 import com.recyclerviewbuilder.library.ViewItemRepresentable
 import com.recyclerviewbuilder.sample.R
@@ -15,6 +16,6 @@ class Images(
         R.drawable.img_6
     )
 ) : ViewItemRepresentable, Post(time = "Mar 9 at 9:10 PM") {
-    override val viewItem: ViewItem<ViewItemRepresentable>
+    override val viewItem: AbstractViewItem<ViewItemRepresentable>
         get() = ImagesViewItem(this)
 }

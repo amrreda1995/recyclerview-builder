@@ -32,8 +32,6 @@ abstract class AbstractRecyclerViewBuilder {
         notifyDataSetChanged()
         toggleLoading(false)
         onUpdatingAdapterFinishedBlock?.invoke()
-
-        Log.e("notified", "done")
     }
 
     abstract fun setEmptyView(emptyView: View): RecyclerViewBuilder

@@ -1,5 +1,6 @@
 package com.recyclerviewbuilder.sample.models
 
+import com.recyclerviewbuilder.library.AbstractViewItem
 import com.recyclerviewbuilder.library.ViewItem
 import com.recyclerviewbuilder.library.ViewItemRepresentable
 import com.recyclerviewbuilder.sample.R
@@ -9,6 +10,6 @@ class ProfilePicture(
     var user: User = User("Cristian Bale"),
     var profilePicture: Int = R.drawable.avatar
 ) : ViewItemRepresentable, Post(time = "Mar 9 at 10:05 PM") {
-    override val viewItem: ViewItem<ViewItemRepresentable>
+    override val viewItem: AbstractViewItem<ViewItemRepresentable>
         get() = ProfilePictureViewItem(this)
 }

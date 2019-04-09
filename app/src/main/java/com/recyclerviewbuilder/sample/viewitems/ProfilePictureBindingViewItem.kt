@@ -10,7 +10,7 @@ import com.recyclerviewbuilder.sample.extensions.imageview.ImageViewMode
 import com.recyclerviewbuilder.sample.extensions.imageview.load
 import com.recyclerviewbuilder.sample.models.BindingProfilePicture
 
-class BindingViewItem(
+class ProfilePictureBindingViewItem(
     val model: BindingProfilePicture
 ) : BindingViewItem<ViewItemRepresentable, ItemBindingChangeProfilePictureBinding>(
     R.layout.item_binding_change_profile_picture, model

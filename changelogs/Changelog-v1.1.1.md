@@ -1,4 +1,4 @@
-## What's new in v1.1.0
+## What's new in v1.1.1
 
 * setPaginationFeatureEnabled function has been renamed to setPaginationEnabled.
 * Fix a bug with LiveData and how it interacts with the lifecycle owner
