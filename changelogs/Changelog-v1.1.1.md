@@ -1,7 +1,7 @@
 ## What's new in v1.1.1
 
 * setPaginationFeatureEnabled function has been renamed to setPaginationEnabled.
-* Fix a bug with LiveData and how it interacts with the lifecycle owner
+* Fix a bug with LiveData and how it interacts with the lifecycle owner, so, in bindViewItems method; you will pass lifecycleOwner instead of lifecycle
 * Introduce DataBinding Support with a new ViewItem type BindingViewItem
 * Added the ability to set header / footer for the recyclerview
 * The ViewItem now accepts optional models which means you can create a ViewItem without a model at all (can be used for headers / footers for example)
