@@ -132,7 +132,7 @@ class Product(val title: String, val date: String): ViewItemRepresentable {
 
 * Now you are ready to use the builder and you have two routes either use LiveData or normal arrays.
 
-## Using DataBinding
+## Using DataBinding With LiveData
 
 ```kotlin
 class MainActivity : AppCompatActivity() {
@@ -161,7 +161,7 @@ class MainActivity : AppCompatActivity() {
 }
 ```
 
-## Using Live Data
+## Using Just LiveData
 
 ```kotlin
 class MainActivity : AppCompatActivity() {
