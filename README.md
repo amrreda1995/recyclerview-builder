@@ -235,7 +235,7 @@ class MainActivity : AppCompatActivity() {
 | setEmptyAdapter      | A function that manually clears the recycler view    |
 | setOnItemClick      | A function that accepts a lambda function which has three paramaters (itemView, model, position)   |
 | setOnItemLongClick      |  A function that accepts a lambda function which has three paramaters (itemView, model, position)    |
-| onUpdatingAdapterFinished     |  A function that acceps a lambda and is invoked once the adapter has been filled with the items    |
+| onUpdatingAdapterFinished     |  A function that acceps a lambda and is invoked once the adapter has been updated (filled with view items or was cleared from them)    |
 | setPaginationEnabled     |   A function that either enables or disables pagination feature   |
 | onPaginate     |  A function that accepts a lambda which is triggered once the recylcer view has reached its end to trigger pagination (given that pagination feature is enabled)    |
 | setHeader     |  A function that accepts a view item and always sets it as the first item no matter how many items are added or removed    |
