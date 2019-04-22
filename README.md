@@ -16,6 +16,7 @@ If you end up using RecyclerViewBuilder in production, I'd love to hear from you
 
 ## Changelogs
 [v1.1.1](https://github.com/amrreda1995/recyclerview-builder/blob/master/changelogs/Changelog-v1.1.1.md)
+[v1.2.0](https://github.com/amrreda1995/recyclerview-builder/blob/master/changelogs/Changelog-v1.2.0.md)
 
 ## Preview
 
@@ -40,6 +41,12 @@ allprojects {
 #### Step 2
 Add the **dependency**:
 ```groovy
+android {
+    dataBinding {
+        enabled = true
+    }
+}
+
 dependencies {
   implementation 'com.github.amrreda1995:recyclerview-builder:1.1.1'
 }
@@ -91,7 +98,7 @@ class ProductViewItem(private val model: Product) : ViewItem<ViewItemRepresentab
 ```
 
 **Using BindingViewItem**
-* First, enable databinding in your android studio
+* Make sure your databinding is enabled (it should really be at this point or the library won't even install, but just make sure)
 ```groovy
 android {
     dataBinding {
@@ -240,6 +247,14 @@ class MainActivity : AppCompatActivity() {
 | onPaginate     |  A function that accepts a lambda which is triggered once the recylcer view has reached its end to trigger pagination (given that pagination feature is enabled)    |
 | setHeader     |  A function that accepts a view item and always sets it as the first item no matter how many items are added or removed    |
 | setFooter     |  A function that accepts a view item and always sets it as the last item no matter how many items are added or removed    |
+| isAdapterEmpty      |  A function returns whether the adapter is empty or not   |
+| scrollTo      |  A function that accepts viewItemIndex, smoothScroll (true by default) and scrolls to the specific item smoothly    |
+| notifyViewItemChanged      |  A function that notifies the builder that a certain item was changed and should be reloaded   |
+| modifyViewItem<T>      |  Where T is one of your models (ViewItemRepresentable), It accepts the index, a lambda function (which has the item as a parameter) whatever changes are done to the items takes effect immediately    |
+| modifyViewItems<T>      |  Where T is one of your models (ViewItemRepresentable), It accepts the indices, a lambda function (which has the item list as a parameter) whatever changes are done to the items takes effect immediately   |
+| insertViewItem      |  A function that accepts atIndex, viewItem and inserts the item at specified index  |
+| switchViewItem      |  A function that accepts ofIndex, withIndex and replaces the two items   |
+| removeViewItem      |  A function that accepts atIndex and removes it from the recylcerview   |
 
 ## **Example project**
 
