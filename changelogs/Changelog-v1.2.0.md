@@ -22,7 +22,7 @@ recyclerViewBuilder.notifyViewItemChanged(atIndex = 8)
 
 
 
-####  modifyViewItem
+####  `modifyViewItem<T>`
 * Where T is one of your models (ViewItemRepresentable), It accepts the index, a lambda function (which has the item as a parameter) whatever changes are done to the items takes effect immediately
 ```kotlin
 recyclerViewBuilder.modifyViewItem<ViewItemRepresentable>(atIndex = 5) {
@@ -38,7 +38,7 @@ recyclerViewBuilder.modifyViewItem<Product>(atIndex = 5) {
 
 
 
-####  modifyViewItems
+####  `modifyViewItems<T>`
 * Where T is one of your models (ViewItemRepresentable), It accepts the indices, a lambda function (which has the item list as a parameter) whatever changes are done to the items takes effect immediately
 ```kotlin
 recyclerViewBuilder.modifyViewItems<ViewItemRepresentable>(atIndices = 4, 13, 20) {
