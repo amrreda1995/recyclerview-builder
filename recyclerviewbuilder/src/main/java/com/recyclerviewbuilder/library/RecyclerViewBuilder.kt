@@ -26,7 +26,7 @@ open class RecyclerViewBuilder(
         }
 
         recyclerView.addScrollListenerForPagination(orientation, reverseLayout) {
-            if (!isRecyclerViewLoading && isPaginationEnabled) {
+            if (!isRecyclerViewLoading && isPaginationEnabled && !isAdapterEmpty()) {
                 isRecyclerViewLoading = true
                 onPaginateBlock?.invoke()
             }
@@ -57,6 +57,10 @@ open class RecyclerViewBuilder(
         return isRecyclerViewLoading
     }
 
+    override fun isAdapterEmpty(): Boolean {
+        return recyclerViewAdapter.viewItemsArrayList.isEmpty()
+    }
+
     override fun setHeader(headerViewItem: AbstractViewItem<ViewItemRepresentable>?): RecyclerViewBuilder {
         if (this.headerViewItem == null && headerViewItem != null) {
             recyclerViewAdapter.viewItemsArrayList.add(0, headerViewItem)
@@ -75,26 +79,8 @@ open class RecyclerViewBuilder(
         }
 
         notifyDataSetChanged()
-
         this.headerViewItem = headerViewItem
         return this
-    }
-
-    override fun setFullWidthHeaderForGridLayout(enabled: Boolean) {
-        val layoutManager = recyclerView.layoutManager
-
-        if (layoutManager is GridLayoutManager) {
-            layoutManager.spanSizeLookup =
-                object : GridLayoutManager.SpanSizeLookup() {
-                    override fun getSpanSize(position: Int): Int {
-                        if (enabled && columnCount != null && headerViewItem != null && position == 0) {
-                            return columnCount
-                        }
-
-                        return 1
-                    }
-                }
-        }
     }
 
     override fun setFooter(
@@ -130,44 +116,142 @@ open class RecyclerViewBuilder(
         } else {
             setFullWidthFooterForGridLayout(false)
         }
-
         notifyDataSetChanged()
-
         this.footerViewItem = footerViewItem
         return this
     }
 
-    override fun setFullWidthFooterForGridLayout(enabled: Boolean) {
-        val layoutManager = recyclerView.layoutManager
-
-        if (layoutManager is GridLayoutManager) {
-            layoutManager.spanSizeLookup =
-                object : GridLayoutManager.SpanSizeLookup() {
-                    override fun getSpanSize(position: Int): Int {
-                        if (enabled
-                            && columnCount != null
-                            && footerViewItem != null
-                            && position == recyclerViewAdapter.viewItemsArrayList.size - 1
-                        ) {
-                            return columnCount
-                        }
-
-                        return 1
-                    }
-                }
+    override fun scrollTo(viewItemIndex: Int, smoothScroll: Boolean): RecyclerViewBuilder {
+        if (smoothScroll) {
+            recyclerView.smoothScrollToPosition(viewItemIndex)
+        } else {
+            recyclerView.scrollToPosition(viewItemIndex)
         }
+
+        return this
+    }
+
+    override fun setPaginationEnabled(enable: Boolean): RecyclerViewBuilder {
+        this.isPaginationEnabled = enable
+        return this
+    }
+
+    override fun notifyDataSetChanged() {
+        recyclerViewAdapter.notifyDataSetChanged()
+        setViewsVisibility()
+    }
+
+    override fun notifyViewItemChanged(atIndex: Int) {
+        recyclerViewAdapter.notifyItemChanged(atIndex)
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewItemRepresentable> modifyViewItem(atIndex: Int, block: (model: T?) -> Unit) {
+        block(recyclerViewAdapter.viewItemsArrayList[atIndex].dataModel as T)
+        recyclerViewAdapter.notifyItemChanged(atIndex)
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewItemRepresentable?> modifyViewItems(
+        vararg atIndices: Int,
+        block: (models: List<T?>) -> Unit
+    ) {
+        val models = ArrayList<T?>()
+        atIndices.forEach { models.add(recyclerViewAdapter.viewItemsArrayList[it].dataModel as T) }
+        block(models)
+        atIndices.forEach { recyclerViewAdapter.notifyItemChanged(it) }
+    }
+
+    override fun insertViewItem(
+        atIndex: Int,
+        viewItem: AbstractViewItem<ViewItemRepresentable>
+    ) {
+        if (headerViewItem == null && footerViewItem == null) {
+            recyclerViewAdapter.viewItemsArrayList.add(atIndex, viewItem)
+            recyclerViewAdapter.notifyItemInserted(atIndex)
+        } else if (headerViewItem != null && footerViewItem == null) {
+            if (atIndex == 0) {
+                recyclerViewAdapter.viewItemsArrayList.add(1, viewItem)
+                recyclerViewAdapter.notifyItemInserted(1)
+            } else {
+                recyclerViewAdapter.viewItemsArrayList.add(atIndex, viewItem)
+                recyclerViewAdapter.notifyItemInserted(atIndex)
+            }
+        } else if (headerViewItem == null && footerViewItem != null) {
+            if (atIndex == recyclerViewAdapter.viewItemsArrayList.size - 1) {
+                recyclerViewAdapter.viewItemsArrayList.add(recyclerViewAdapter.viewItemsArrayList.size - 2, viewItem)
+                recyclerViewAdapter.notifyItemInserted(recyclerViewAdapter.viewItemsArrayList.size - 2)
+            } else {
+                recyclerViewAdapter.viewItemsArrayList.add(atIndex, viewItem)
+                recyclerViewAdapter.notifyItemInserted(atIndex)
+            }
+        } else if (headerViewItem != null && footerViewItem != null) {
+            when (atIndex) {
+                0 -> {
+                    recyclerViewAdapter.viewItemsArrayList.add(1, viewItem)
+                    recyclerViewAdapter.notifyItemInserted(1)
+                }
+                recyclerViewAdapter.viewItemsArrayList.size - 1 -> {
+                    recyclerViewAdapter.viewItemsArrayList.add(
+                        recyclerViewAdapter.viewItemsArrayList.size - 2,
+                        viewItem
+                    )
+                    recyclerViewAdapter.notifyItemInserted(recyclerViewAdapter.viewItemsArrayList.size - 2)
+                }
+                else -> {
+                    recyclerViewAdapter.viewItemsArrayList.add(atIndex, viewItem)
+                    recyclerViewAdapter.notifyItemInserted(atIndex)
+                }
+            }
+        }
+
+        setViewsVisibility()
+    }
+
+    override fun switchViewItem(ofIndex: Int, withIndex: Int) {
+        if (headerViewItem != null && (ofIndex == 0 || withIndex == 0)) {
+            throw Throwable("Can not switch header view item with another index")
+        } else if (footerViewItem != null && (ofIndex == recyclerViewAdapter.viewItemsArrayList.size - 1
+                    || withIndex == recyclerViewAdapter.viewItemsArrayList.size - 1)) {
+            throw Throwable("Can not switch footer view item with another index")
+        } else {
+            val tmpViewItem = recyclerViewAdapter.viewItemsArrayList[ofIndex]
+            recyclerViewAdapter.viewItemsArrayList[ofIndex] = recyclerViewAdapter.viewItemsArrayList[withIndex]
+            recyclerViewAdapter.viewItemsArrayList[withIndex] = tmpViewItem
+            recyclerViewAdapter.notifyItemMoved(ofIndex, withIndex)
+        }
+    }
+
+    override fun removeViewItem(atIndex: Int) {
+        recyclerViewAdapter.viewItemsArrayList.removeAt(atIndex)
+        recyclerViewAdapter.notifyItemRemoved(atIndex)
+        setViewsVisibility()
+
+        if (headerViewItem != null && atIndex == 0) {
+            headerViewItem = null
+        } else if (footerViewItem != null && atIndex == recyclerViewAdapter.viewItemsArrayList.size - 1) {
+            headerViewItem = null
+        }
+    }
+
+    override fun setEmptyAdapter(): RecyclerViewBuilder {
+        recyclerViewAdapter.viewItemsArrayList.clear()
+        notifyDataSetChanged()
+        setViewsVisibility()
+        return this
     }
 
     override fun setViewItems(
         viewItemsArrayList: ViewItemArrayList,
         clearsOnSet: Boolean,
         appendToEnd: Boolean
-    ) {
+    ): RecyclerViewBuilder {
         setAdapterViewItems(viewItemsArrayList, clearsOnSet, appendToEnd)
 
         notifyDataSetChanged()
         toggleLoading(false)
         onUpdatingAdapterFinishedBlock?.invoke()
+        return this
     }
 
     override fun bindViewItems(
@@ -175,23 +259,9 @@ open class RecyclerViewBuilder(
         viewItems: MutableLiveData<ViewItemsObserver>
     ): RecyclerViewBuilder {
         this.lifecycleOwner = lifecycleOwner
-
         this.viewItems = viewItems
-
         lifecycleOwner.lifecycle.addObserver(this)
-
         return this
-    }
-
-    override fun notifyDataSetChanged() {
-        recyclerViewAdapter.notifyDataSetChanged()
-        isAdapterEmpty()
-    }
-
-    override fun setEmptyAdapter() {
-        recyclerViewAdapter.viewItemsArrayList.clear()
-        notifyDataSetChanged()
-        isAdapterEmpty()
     }
 
     override fun setOnItemClick(block: (itemView: View, model: ViewItemRepresentable?, position: Int) -> Unit): RecyclerViewBuilder {
@@ -204,18 +274,13 @@ open class RecyclerViewBuilder(
         return this
     }
 
-    override fun onUpdatingAdapterFinished(block: () -> Unit): RecyclerViewBuilder {
-        onUpdatingAdapterFinishedBlock = block
-        return this
-    }
-
-    override fun setPaginationEnabled(enable: Boolean): RecyclerViewBuilder {
-        this.isPaginationEnabled = enable
-        return this
-    }
-
     override fun onPaginate(block: () -> Unit): RecyclerViewBuilder {
         onPaginateBlock = block
+        return this
+    }
+
+    override fun onUpdatingAdapterFinished(block: () -> Unit): RecyclerViewBuilder {
+        onUpdatingAdapterFinishedBlock = block
         return this
     }
 
@@ -282,11 +347,11 @@ open class RecyclerViewBuilder(
             emptyView?.visibility = View.GONE
             loadingView?.visibility = View.VISIBLE
         } else {
-            isAdapterEmpty()
+            setViewsVisibility()
         }
     }
 
-    override fun isAdapterEmpty() {
+    override fun setViewsVisibility() {
         loadingView?.visibility = View.GONE
 
         if (recyclerViewAdapter.viewItemsArrayList.isNotEmpty()) {
@@ -298,6 +363,39 @@ open class RecyclerViewBuilder(
         }
     }
 
+    override fun setFullWidthHeaderForGridLayout(enabled: Boolean) {
+        columnCount?.let {
+            (recyclerView.layoutManager as GridLayoutManager).spanSizeLookup =
+                object : GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int {
+                        if (enabled && headerViewItem != null && position == 0) {
+                            return columnCount
+                        }
+
+                        return 1
+                    }
+                }
+        }
+    }
+
+    override fun setFullWidthFooterForGridLayout(enabled: Boolean) {
+        columnCount?.let {
+            (recyclerView.layoutManager as GridLayoutManager).spanSizeLookup =
+                object : GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int {
+                        if (enabled
+                            && footerViewItem != null
+                            && position == recyclerViewAdapter.viewItemsArrayList.size - 1
+                        ) {
+                            return columnCount
+                        }
+
+                        return 1
+                    }
+                }
+        }
+    }
+
     @Suppress("Unused")
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     private fun bindViewItemsObserver() {
@@ -306,7 +404,7 @@ open class RecyclerViewBuilder(
 
     @Suppress("Unused")
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    private fun unbindLifecycle() {
+    private fun unbindViewItemsObserver() {
         viewItems?.removeObservers(lifecycleOwner!!)
         lifecycleOwner?.lifecycle?.removeObserver(this)
     }

@@ -39,6 +39,7 @@ class BindingAdapter : RecyclerView.Adapter<BindingAdapter.BindingViewHolder>(),
         return viewItemsArrayList.size
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun onBindViewHolder(holder: BindingViewHolder, position: Int) {
 
         (viewItemsArrayList[holder.adapterPosition] as BindingViewItem<ViewItemRepresentable, ViewDataBinding>)

@@ -5,13 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-interface BaseAdapterInterface {
-    var viewItemsArrayList: ViewItemArrayList
-    fun notifyDataSetChanged()
-    fun setOnItemClick(block: (itemView: View, model: ViewItemRepresentable?, position: Int) -> Unit)
-    fun setOnItemLongClick(block: (itemView: View, model: ViewItemRepresentable?, position: Int) -> Unit)
-}
-
 class Adapter : RecyclerView.Adapter<Adapter.ViewHolder>(), BaseAdapterInterface {
     override var viewItemsArrayList = ViewItemArrayList()
 
