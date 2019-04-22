@@ -250,8 +250,8 @@ class MainActivity : AppCompatActivity() {
 | isAdapterEmpty      |  A function returns whether the adapter is empty or not   |
 | scrollTo      |  A function that accepts viewItemIndex, smoothScroll (true by default) and scrolls to the specific item smoothly    |
 | notifyViewItemChanged      |  A function that notifies the builder that a certain item was changed and should be reloaded   |
-| modifyViewItem<T>      |  Where T is one of your models (ViewItemRepresentable), It accepts the index, a lambda function (which has the item as a parameter) whatever changes are done to the items takes effect immediately    |
-| modifyViewItems<T>      |  Where T is one of your models (ViewItemRepresentable), It accepts the indices, a lambda function (which has the item list as a parameter) whatever changes are done to the items takes effect immediately   |
+| `modifyViewItem<T>`      |  Where T is one of your models (ViewItemRepresentable), It accepts the index, a lambda function (which has the item as a parameter) whatever changes are done to the items takes effect immediately    |
+| `modifyViewItems<T>`      |  Where T is one of your models (ViewItemRepresentable), It accepts the indices, a lambda function (which has the item list as a parameter) whatever changes are done to the items takes effect immediately   |
 | insertViewItem      |  A function that accepts atIndex, viewItem and inserts the item at specified index  |
 | switchViewItem      |  A function that accepts ofIndex, withIndex and replaces the two items   |
 | removeViewItem      |  A function that accepts atIndex and removes it from the recylcerview   |
