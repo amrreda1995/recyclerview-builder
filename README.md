@@ -48,7 +48,7 @@ android {
 }
 
 dependencies {
-  implementation 'com.github.amrreda1995:recyclerview-builder:1.1.1'
+  	implementation 'com.github.amrreda1995:recyclerview-builder:1.2.0'
 }
 ```
 ### Without Jitpack
