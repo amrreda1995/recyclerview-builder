@@ -98,7 +98,7 @@ class ProductViewItem(private val model: Product) : ViewItem<ViewItemRepresentab
 ```
 
 **Using BindingViewItem**
-* Make sure your databinding is enabled (it should really be at this point or the library won't even install correctly, but just make sure)
+* Make sure your databinding is enabled (it should really be at this point or the library won't even installed correctly, but just make sure)
 ```groovy
 android {
     dataBinding {
@@ -139,7 +139,7 @@ class Product(val title: String, val date: String): ViewItemRepresentable {
 
 * Now you are ready to use the builder and you have two routes either use LiveData or normal arrays.
 
-## Using LiveData (with/without DataBinding)
+## Using LiveData (with / without DataBinding)
 
 ```kotlin
 class MainActivity : AppCompatActivity() {
@@ -170,7 +170,7 @@ class MainActivity : AppCompatActivity() {
 
 The Live Data is of type "ViewItemsObserver" class which accepts two parameters; viewItemsArrayList (ArrayList) and clearsOnSet (Boolean). If you'd like to clear the items each time you set a value for the live data; you set clearsOnSet to true, otherwise just leave it to default value which is false and it appends the added value
 
-## Using Normal Arrays (with/without DataBinding)
+## Using Normal Arrays (with / without DataBinding)
 
 ```kotlin
 class MainActivity : AppCompatActivity() {
