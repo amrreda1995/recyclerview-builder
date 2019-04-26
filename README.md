@@ -98,7 +98,7 @@ class ProductViewItem(private val model: Product) : ViewItem<ViewItemRepresentab
 ```
 
 **Using BindingViewItem**
-* Make sure your databinding is enabled (it should really be at this point or the library won't even installed correctly, but just make sure)
+* Make sure your databinding is enabled (it should really be at this point or the library won't be even installed correctly, but just make sure)
 ```groovy
 android {
     dataBinding {
