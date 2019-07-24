@@ -1,12 +1,12 @@
 ## What's new in v1.2.1
 
-### Bugs fixed
+### - Bugs fixed
 
 
-### Performance enhanced by setting the adapter to use stable ids for each view item
+### - Performance enhanced by setting the adapter to use stable ids for each view item
 
 
-### New function was added
+### - New function was added
 
 
 ####  indexOf
