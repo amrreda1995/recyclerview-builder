@@ -75,7 +75,7 @@ Clone the repo and copy the recycler view builder files into your project.
 * Implement ViewItemRepresentable interface
 
 ```kotlin
-class Product(val title: String, val date: String): ViewItemRepresentable {
+class Product(val id, val title: String, val date: String): ViewItemRepresentable {
     override val viewItem: AbstractViewItem<ViewItemRepresentable>
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 }
@@ -91,6 +91,11 @@ class Product(val title: String, val date: String): ViewItemRepresentable {
 
 ```kotlin
 class ProductViewItem(private val model: Product) : ViewItem<ViewItemRepresentable>(R.layout.item_product, model) {
+
+    override fun hashCode(): Int {
+        return model.id
+    }
+	
     override fun bind(itemView: View, viewItemPosition: Int) {
         itemView.titleTextView.text = model.title
         itemView.dateTextView.text = model.date
@@ -113,6 +118,11 @@ Given that you have created an XML named "item_product" the generated class name
 
 ```kotlin
 class ProductViewItem(private val model: Product) : BindingViewItem<ViewItemRepresentable, ItemProductBinding>(R.layout.item_product, model) {
+    
+    override fun hashCode(): Int {
+        return model.id
+    }
+
     override fun bind(binding: ItemProductBinding, viewItemPosition: Int) {
         binding.model = model
     }
@@ -150,10 +160,10 @@ class MainActivity : AppCompatActivity() {
     private val viewItems = MutableLiveData<ViewItemsObserver>()
 
     private var models = arrayListOf(
-        Product("Product one", "2/4/2019"),
-        Product("Product two", "2/4/2019"),
-        Product("Product three", "2/4/2019"),
-        Product("Product four", "2/4/2019")
+        Product(1, "Product one", "2/4/2019"),
+        Product(2, "Product two", "2/4/2019"),
+        Product(3, "Product three", "2/4/2019"),
+        Product(4, "Product four", "2/4/2019")
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -179,10 +189,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recyclerViewBuilder: RecyclerViewBuilder
 
     private var models = arrayListOf(
-        Product("Product one", "2/4/2019"),
-        Product("Product two", "2/4/2019"),
-        Product("Product three", "2/4/2019"),
-        Product("Product four", "2/4/2019")
+        Product(1, "Product one", "2/4/2019"),
+        Product(2, "Product two", "2/4/2019"),
+        Product(3, "Product three", "2/4/2019"),
+        Product(4, "Product four", "2/4/2019")
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
