@@ -75,7 +75,7 @@ Clone the repo and copy the recycler view builder files into your project.
 * Implement ViewItemRepresentable interface
 
 ```kotlin
-class Product(val id, val title: String, val date: String): ViewItemRepresentable {
+class Product(val id: Int, val title: String, val date: String): ViewItemRepresentable {
     override val viewItem: AbstractViewItem<ViewItemRepresentable>
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 }
@@ -142,7 +142,7 @@ class FooterViewItem : BindingViewItem<ViewItemRepresentable, SomeBindingClass>(
 * Now, go back to your original model and return this view item on the overriden viewItem variable
 
 ```kotlin
-class Product(val title: String, val date: String): ViewItemRepresentable {
+class Product(val id: Int, val title: String, val date: String): ViewItemRepresentable {
     override val viewItem: AbstractViewItem<ViewItemRepresentable>
         get() = ProductViewItem(this)
 }
