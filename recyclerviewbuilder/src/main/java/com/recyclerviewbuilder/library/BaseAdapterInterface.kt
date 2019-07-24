@@ -12,4 +12,5 @@ interface BaseAdapterInterface {
     fun notifyItemRemoved(position: Int)
     fun setOnItemClick(block: (itemView: View, model: ViewItemRepresentable?, position: Int) -> Unit)
     fun setOnItemLongClick(block: (itemView: View, model: ViewItemRepresentable?, position: Int) -> Unit)
+    fun notifyItemRangeRemoved(positionStart: Int, itemCount: Int)
 }

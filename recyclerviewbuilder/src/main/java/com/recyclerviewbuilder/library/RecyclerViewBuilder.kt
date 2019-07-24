@@ -17,6 +17,8 @@ open class RecyclerViewBuilder(
 ) : LifecycleObserver, AbstractRecyclerViewBuilder() {
 
     init {
+        unbindViewItemsObserver()
+
         if (isDataBindingEnabled) {
             recyclerView.adapter = BindingAdapter()
             recyclerViewAdapter = recyclerView.adapter as BindingAdapter
@@ -139,16 +141,19 @@ open class RecyclerViewBuilder(
     override fun notifyDataSetChanged() {
         recyclerViewAdapter.notifyDataSetChanged()
         setViewsVisibility()
+        onUpdatingAdapterFinishedBlock?.invoke()
     }
 
     override fun notifyViewItemChanged(atIndex: Int) {
         recyclerViewAdapter.notifyItemChanged(atIndex)
+        onUpdatingAdapterFinishedBlock?.invoke()
     }
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewItemRepresentable> modifyViewItem(atIndex: Int, block: (model: T?) -> Unit) {
         block(recyclerViewAdapter.viewItemsArrayList[atIndex].dataModel as T)
         recyclerViewAdapter.notifyItemChanged(atIndex)
+        onUpdatingAdapterFinishedBlock?.invoke()
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -160,6 +165,7 @@ open class RecyclerViewBuilder(
         atIndices.forEach { models.add(recyclerViewAdapter.viewItemsArrayList[it].dataModel as T) }
         block(models)
         atIndices.forEach { recyclerViewAdapter.notifyItemChanged(it) }
+        onUpdatingAdapterFinishedBlock?.invoke()
     }
 
     override fun insertViewItem(
@@ -206,13 +212,15 @@ open class RecyclerViewBuilder(
         }
 
         setViewsVisibility()
+        onUpdatingAdapterFinishedBlock?.invoke()
     }
 
     override fun switchViewItem(ofIndex: Int, withIndex: Int) {
         if (headerViewItem != null && (ofIndex == 0 || withIndex == 0)) {
             throw Throwable("Can not switch header view item with another index")
         } else if (footerViewItem != null && (ofIndex == recyclerViewAdapter.viewItemsArrayList.size - 1
-                    || withIndex == recyclerViewAdapter.viewItemsArrayList.size - 1)) {
+                    || withIndex == recyclerViewAdapter.viewItemsArrayList.size - 1)
+        ) {
             throw Throwable("Can not switch footer view item with another index")
         } else {
             val tmpViewItem = recyclerViewAdapter.viewItemsArrayList[ofIndex]
@@ -220,6 +228,8 @@ open class RecyclerViewBuilder(
             recyclerViewAdapter.viewItemsArrayList[withIndex] = tmpViewItem
             recyclerViewAdapter.notifyItemMoved(ofIndex, withIndex)
         }
+
+        onUpdatingAdapterFinishedBlock?.invoke()
     }
 
     override fun removeViewItem(atIndex: Int) {
@@ -232,12 +242,22 @@ open class RecyclerViewBuilder(
         } else if (footerViewItem != null && atIndex == recyclerViewAdapter.viewItemsArrayList.size - 1) {
             headerViewItem = null
         }
+
+        onUpdatingAdapterFinishedBlock?.invoke()
+    }
+
+    override fun indexOf(viewItemRepresentable: ViewItemRepresentable): Int {
+        return recyclerViewAdapter.viewItemsArrayList.indexOfFirst {
+            it.dataModel?.equals(viewItemRepresentable) == true
+        }
     }
 
     override fun setEmptyAdapter(): RecyclerViewBuilder {
+        val size = recyclerViewAdapter.viewItemsArrayList.size
         recyclerViewAdapter.viewItemsArrayList.clear()
-        notifyDataSetChanged()
+        recyclerViewAdapter.notifyItemRangeRemoved(0, size)
         setViewsVisibility()
+        onUpdatingAdapterFinishedBlock?.invoke()
         return this
     }
 
@@ -398,14 +418,18 @@ open class RecyclerViewBuilder(
 
     @Suppress("Unused")
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    private fun bindViewItemsObserver() {
-        viewItems?.observe(lifecycleOwner!!, observer)
+    fun bindViewItemsObserver() {
+        lifecycleOwner?.let {
+            viewItems?.observe(it, observer)
+        }
     }
 
     @Suppress("Unused")
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    private fun unbindViewItemsObserver() {
-        viewItems?.removeObservers(lifecycleOwner!!)
-        lifecycleOwner?.lifecycle?.removeObserver(this)
+    fun unbindViewItemsObserver() {
+        lifecycleOwner?.let {
+            viewItems?.removeObservers(it)
+            lifecycleOwner?.lifecycle?.removeObserver(this)
+        }
     }
 }

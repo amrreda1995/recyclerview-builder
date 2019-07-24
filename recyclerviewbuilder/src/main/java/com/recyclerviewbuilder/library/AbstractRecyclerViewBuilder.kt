@@ -69,6 +69,8 @@ abstract class AbstractRecyclerViewBuilder {
 
     abstract fun removeViewItem(atIndex: Int)
 
+    abstract fun indexOf(viewItemRepresentable: ViewItemRepresentable): Int
+
     abstract fun setEmptyAdapter(): RecyclerViewBuilder
 
     abstract fun setViewItems(

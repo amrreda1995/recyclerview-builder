@@ -17,6 +17,7 @@ If you end up using RecyclerViewBuilder in production, I'd love to hear from you
 ## Changelogs
 [v1.1.1](https://github.com/amrreda1995/recyclerview-builder/blob/master/changelogs/Changelog-v1.1.1.md)
 [v1.2.0](https://github.com/amrreda1995/recyclerview-builder/blob/master/changelogs/Changelog-v1.2.0.md)
+[v1.2.1](https://github.com/amrreda1995/recyclerview-builder/blob/master/changelogs/Changelog-v1.2.1.md)
 
 ## Preview
 
@@ -48,7 +49,7 @@ android {
 }
 
 dependencies {
-  	implementation 'com.github.amrreda1995:recyclerview-builder:1.2.0'
+  	implementation 'com.github.amrreda1995:recyclerview-builder:1.2.1'
 }
 ```
 ### Without Jitpack
@@ -229,8 +230,8 @@ class MainActivity : AppCompatActivity() {
 
 | Function        | Description      |
 | ------------- |-------------|
-| buildWithLinearLayout      | A function that accepts isDataBindingEnabled, orientation and reverselayout parameters and builds the linear layout recycler view     |
-| buildWithGridLayout     | A function that accepts isDataBindingEnabled, columnCount, orientation and reverselayout parameters and builds the grid layout recycler view     |
+| buildWithLinearLayout      | A function that accepts isDataBindingEnabled, orientation, reverselayout, canScrollHorizontally and canScrollVertically parameters and builds the linear layout recycler view     |
+| buildWithGridLayout     | A function that accepts isDataBindingEnabled, columnCount, orientation, reverselayout, canScrollHorizontally and canScrollVertically parameters and builds the grid layout recycler view     |
 | setEmptyView      | A function that accepts a view which is used as a placeholder when the recycler view is empty     |
 | setLoadingView     | A function that accepts a view which is used as a placeholder when the recycler view is in loading state     |
 | startLoading      |  A function that manually triggers loading state on   |

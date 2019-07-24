@@ -11,6 +11,14 @@ class Adapter : RecyclerView.Adapter<Adapter.ViewHolder>(), BaseAdapterInterface
     private var onItemClickBlock: ((View, ViewItemRepresentable?, Int) -> Unit)? = null
     private var onItemLongClickBlock: ((View, ViewItemRepresentable?, Int) -> Unit)? = null
 
+    init {
+        setHasStableIds(true)
+    }
+
+    override fun getItemId(position: Int): Long {
+        return viewItemsArrayList[position].hashCode().toLong()
+    }
+
     override fun setOnItemClick(block: (itemView: View, model: ViewItemRepresentable?, position: Int) -> Unit) {
         onItemClickBlock = block
     }
