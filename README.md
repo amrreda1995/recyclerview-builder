@@ -227,6 +227,7 @@ class MainActivity : AppCompatActivity() {
 | insertViewItem      |  A function that accepts atIndex, viewItem and inserts the item at specified index  |
 | switchViewItem      |  A function that accepts ofIndex, withIndex and replaces the two items   |
 | removeViewItem      |  A function that accepts atIndex and removes it from the recylcerview   |
+| indexOf      |  A function that accepts a viewItemRepresentable and returns its index in the recyclerView   |
 
 ## **Example project**
 
