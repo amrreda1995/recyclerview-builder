@@ -1,6 +1,6 @@
 ## What's new in v1.2.0
 
-### New functions were added
+### New functions has been added
 
 
 ####  isAdapterEmpty

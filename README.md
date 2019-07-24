@@ -33,10 +33,10 @@ If you end up using RecyclerViewBuilder in production, I'd love to hear from you
 Add the **JitPack** repository in your root `build.gradle` at the end of repositories:
 ```groovy
 allprojects {
-	repositories {
-		//Other repositories...
-		maven { url 'https://jitpack.io' }
-	}
+    repositories {
+	//Other repositories...
+	maven { url 'https://jitpack.io' }
+    }
 }
 ```
 #### Step 2
@@ -44,12 +44,12 @@ Add the **dependency**:
 ```groovy
 android {
     dataBinding {
-        enabled = true
+	enabled = true
     }
 }
 
 dependencies {
-  	implementation 'com.github.amrreda1995:recyclerview-builder:1.2.1'
+     implementation 'com.github.amrreda1995:recyclerview-builder:1.2.1'
 }
 ```
 ### Without Jitpack
@@ -99,7 +99,7 @@ class ProductViewItem(private val model: Product) : ViewItem<ViewItemRepresentab
 ```
 
 **Using BindingViewItem**
-* Make sure your databinding is enabled (it should really be at this point or the library won't even install, but just make sure)
+* Make sure your databinding is enabled (it should really be at this point or the library won't be even installed correctly, but just make sure)
 ```groovy
 android {
     dataBinding {
@@ -140,7 +140,7 @@ class Product(val title: String, val date: String): ViewItemRepresentable {
 
 * Now you are ready to use the builder and you have two routes either use LiveData or normal arrays.
 
-## Using DataBinding With LiveData
+## Using LiveData (with / without DataBinding)
 
 ```kotlin
 class MainActivity : AppCompatActivity() {
@@ -169,38 +169,9 @@ class MainActivity : AppCompatActivity() {
 }
 ```
 
-## Using Just LiveData
-
-```kotlin
-class MainActivity : AppCompatActivity() {
-
-    private lateinit var recyclerViewBuilder: RecyclerViewBuilder
-
-    private val viewItems = MutableLiveData<ViewItemsObserver>()
-
-    private var models = arrayListOf(
-        Product("Product one", "2/4/2019"),
-        Product("Product two", "2/4/2019"),
-        Product("Product three", "2/4/2019"),
-        Product("Product four", "2/4/2019")
-    )
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        recyclerViewBuilder = RecyclerViewBuilderFactory(recyclerView)
-            .buildWithLinearLayout()
-            .bindViewItems(this, viewItems)
-
-        viewItems.value = ViewItemsObserver(ArrayList(models.map { it.viewItem }), false)
-    }
-}
-```
-
 The Live Data is of type "ViewItemsObserver" class which accepts two parameters; viewItemsArrayList (ArrayList) and clearsOnSet (Boolean). If you'd like to clear the items each time you set a value for the live data; you set clearsOnSet to true, otherwise just leave it to default value which is false and it appends the added value
 
-## Using Normal Arrays
+## Using Normal Arrays (with / without DataBinding)
 
 ```kotlin
 class MainActivity : AppCompatActivity() {
