@@ -8,7 +8,7 @@
 ```kotlin
 class ProductViewItem(private val model: Product) : ViewItem<ViewItemRepresentable>(R.layout.item_product, model) {
 
-    //somthing like this
+    //something like this
     override fun hashCode(): Int {
         return model.id
     }
