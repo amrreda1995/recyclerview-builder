@@ -4,6 +4,20 @@
 
 
 ### - Performance enhanced by setting the adapter to use stable ids for each view item
+* Note that, you may to override "hashCode" function in your view item to take the advantage of this enhancement correctly like this 
+```kotlin
+class ProductViewItem(private val model: Product) : ViewItem<ViewItemRepresentable>(R.layout.item_product, model) {
+
+    //somthing like this
+    override fun hashCode(): Int {
+        return model.id
+    }
+	
+    override fun bind(itemView: View, viewItemPosition: Int) {
+        itemView.titleTextView.text = model.title
+    }
+}
+```
 
 
 ### - New function was added
