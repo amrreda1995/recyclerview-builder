@@ -18,7 +18,7 @@ class Product(val id: Int, val title: String, val date: String): ViewItemReprese
     override val viewItem: AbstractViewItem<ViewItemRepresentable>
         get() = ProductViewItem(this)
         
-    //somthing like this
+    //something like this
     override fun equals(other: Any?): Boolean {
         if (other is Product) {
             return other.id == this.id
