@@ -145,6 +145,14 @@ class FooterViewItem : BindingViewItem<ViewItemRepresentable, SomeBindingClass>(
 class Product(val id: Int, val title: String, val date: String): ViewItemRepresentable {
     override val viewItem: AbstractViewItem<ViewItemRepresentable>
         get() = ProductViewItem(this)
+	
+    //to take the advantage of indexOf function in RecyclerViewBuilder
+    override fun equals(other: Any?): Boolean {
+        if (other is Product) {
+            return other.id == this.id
+        }
+        return false
+    }
 }
 ```
 
