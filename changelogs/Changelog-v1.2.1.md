@@ -11,3 +11,19 @@
 
 ####  indexOf
 * A function returns the index of the given viewItemRepresentable
+* Note to use this function successfully, you have to override "equals" function in your model like this 
+```kotlin
+class Product(val id: Int, val title: String, val date: String): ViewItemRepresentable {
+
+    override val viewItem: AbstractViewItem<ViewItemRepresentable>
+        get() = ProductViewItem(this)
+        
+    //somthing like this
+    override fun equals(other: Any?): Boolean {
+        if (other is Product) {
+            return other.id == this.id
+        }
+        return false
+    }
+}
+```
