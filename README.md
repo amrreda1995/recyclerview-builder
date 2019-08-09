@@ -45,7 +45,7 @@ Add the **dependency**:
 ```groovy
 android {
     dataBinding {
-	 enabled = true
+	enabled = true
     }
 }
 
