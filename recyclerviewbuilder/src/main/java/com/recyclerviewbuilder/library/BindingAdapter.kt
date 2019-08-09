@@ -30,7 +30,7 @@ class BindingAdapter : RecyclerView.Adapter<BindingAdapter.BindingViewHolder>(),
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (viewItemsArrayList[position] !is BindingViewItem<*, *>) {
+        if (viewItemsArrayList[position] !is BindingViewItem<*>) {
             throw Throwable("ViewItem type mismatch, item should be of type BindingViewItem")
         }
 
@@ -50,7 +50,7 @@ class BindingAdapter : RecyclerView.Adapter<BindingAdapter.BindingViewHolder>(),
     @Suppress("UNCHECKED_CAST")
     override fun onBindViewHolder(holder: BindingViewHolder, position: Int) {
 
-        (viewItemsArrayList[holder.adapterPosition] as BindingViewItem<ViewItemRepresentable, ViewDataBinding>)
+        (viewItemsArrayList[holder.adapterPosition] as BindingViewItem<ViewDataBinding>)
             .bind(holder.binding, holder.adapterPosition)
 
         holder.itemView.setOnClickListener {

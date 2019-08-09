@@ -10,8 +10,8 @@ abstract class AbstractRecyclerViewBuilder {
     protected var emptyView: View? = null
     protected var loadingView: View? = null
 
-    protected var headerViewItem: AbstractViewItem<ViewItemRepresentable>? = null
-    protected var footerViewItem: AbstractViewItem<ViewItemRepresentable>? = null
+    protected var headerViewItem: AbstractViewItem? = null
+    protected var footerViewItem: AbstractViewItem? = null
 
     protected lateinit var recyclerViewAdapter: BaseAdapterInterface
 
@@ -44,9 +44,9 @@ abstract class AbstractRecyclerViewBuilder {
 
     abstract fun isAdapterEmpty(): Boolean
 
-    abstract fun setHeader(headerViewItem: AbstractViewItem<ViewItemRepresentable>?): RecyclerViewBuilder
+    abstract fun setHeader(headerViewItem: AbstractViewItem?): RecyclerViewBuilder
 
-    abstract fun setFooter(footerViewItem: AbstractViewItem<ViewItemRepresentable>?): RecyclerViewBuilder
+    abstract fun setFooter(footerViewItem: AbstractViewItem?): RecyclerViewBuilder
 
     abstract fun scrollTo(viewItemIndex: Int, smoothScroll: Boolean = true): RecyclerViewBuilder
 
@@ -63,7 +63,7 @@ abstract class AbstractRecyclerViewBuilder {
         block: (models: List<T?>) -> Unit
     )
 
-    abstract fun insertViewItem(atIndex: Int, viewItem: AbstractViewItem<ViewItemRepresentable>)
+    abstract fun insertViewItem(atIndex: Int, viewItem: AbstractViewItem)
 
     abstract fun switchViewItem(ofIndex: Int, withIndex: Int)
 

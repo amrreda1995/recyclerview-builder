@@ -11,7 +11,8 @@ import kotlinx.android.synthetic.main.item_images.view.*
 
 class ImagesViewItem(
     private val model: Images
-) : ViewItem<ViewItemRepresentable>(R.layout.item_images, model) {
+) : ViewItem(R.layout.item_images, model) {
+
     override fun bind(itemView: View, viewItemPosition: Int) {
         itemView.userName.text = model.user.name
         itemView.time.text = model.time

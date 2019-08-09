@@ -4,4 +4,4 @@ import com.recyclerviewbuilder.library.ViewItem
 import com.recyclerviewbuilder.library.ViewItemRepresentable
 import com.recyclerviewbuilder.sample.R
 
-class FooterViewItem : ViewItem<ViewItemRepresentable>(R.layout.item_footer)
+class FooterViewItem : ViewItem(R.layout.item_footer)

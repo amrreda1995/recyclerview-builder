@@ -9,6 +9,7 @@ class ImageAndContent(
     var user: User = User("Robert Downey"),
     val image: Int = R.drawable.img_3
 ) : ViewItemRepresentable, Post("Van Gogh, Died: 29 July 1890", "Mar 9 at 8:15 PM") {
-    override val viewItem: AbstractViewItem<ViewItemRepresentable>
+
+    override val viewItem: AbstractViewItem
         get() = ImageAndContentViewItem(this)
 }

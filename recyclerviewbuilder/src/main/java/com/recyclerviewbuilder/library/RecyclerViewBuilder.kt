@@ -5,7 +5,7 @@ import androidx.lifecycle.*
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-typealias _ViewItemRepresentable = AbstractViewItem<ViewItemRepresentable>
+typealias _ViewItemRepresentable = AbstractViewItem
 typealias ViewItemArrayList = ArrayList<_ViewItemRepresentable>
 
 open class RecyclerViewBuilder(
@@ -63,7 +63,7 @@ open class RecyclerViewBuilder(
         return recyclerViewAdapter.viewItemsArrayList.isEmpty()
     }
 
-    override fun setHeader(headerViewItem: AbstractViewItem<ViewItemRepresentable>?): RecyclerViewBuilder {
+    override fun setHeader(headerViewItem: AbstractViewItem?): RecyclerViewBuilder {
         if (this.headerViewItem == null && headerViewItem != null) {
             recyclerViewAdapter.viewItemsArrayList.add(0, headerViewItem)
 
@@ -86,7 +86,7 @@ open class RecyclerViewBuilder(
     }
 
     override fun setFooter(
-        footerViewItem: AbstractViewItem<ViewItemRepresentable>?
+        footerViewItem: AbstractViewItem?
     ): RecyclerViewBuilder {
         var indexToBeAdded = 0
         var indexToBeRemoved = 0
@@ -170,7 +170,7 @@ open class RecyclerViewBuilder(
 
     override fun insertViewItem(
         atIndex: Int,
-        viewItem: AbstractViewItem<ViewItemRepresentable>
+        viewItem: AbstractViewItem
     ) {
         if (headerViewItem == null && footerViewItem == null) {
             recyclerViewAdapter.viewItemsArrayList.add(atIndex, viewItem)

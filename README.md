@@ -18,6 +18,7 @@ If you end up using RecyclerViewBuilder in production, I'd love to hear from you
 [v1.1.1](https://github.com/amrreda1995/recyclerview-builder/blob/master/changelogs/Changelog-v1.1.1.md)
 [v1.2.0](https://github.com/amrreda1995/recyclerview-builder/blob/master/changelogs/Changelog-v1.2.0.md)
 [v1.2.1](https://github.com/amrreda1995/recyclerview-builder/blob/master/changelogs/Changelog-v1.2.1.md)
+[v2.0.0](https://github.com/amrreda1995/recyclerview-builder/blob/master/changelogs/Changelog-v2.0.0.md)
 
 ## Preview
 
@@ -44,12 +45,12 @@ Add the **dependency**:
 ```groovy
 android {
     dataBinding {
-	enabled = true
+	    enabled = true
     }
 }
 
 dependencies {
-     implementation 'com.github.amrreda1995:recyclerview-builder:1.2.1'
+     implementation 'com.github.amrreda1995:recyclerview-builder:2.0.0'
 }
 ```
 ### Without Jitpack
@@ -76,7 +77,8 @@ Clone the repo and copy the recycler view builder files into your project.
 
 ```kotlin
 class Product(val id: Int, val title: String, val date: String): ViewItemRepresentable {
-    override val viewItem: AbstractViewItem<ViewItemRepresentable>
+
+    override val viewItem: AbstractViewItem
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 }
 ```
@@ -87,10 +89,10 @@ class Product(val id: Int, val title: String, val date: String): ViewItemReprese
 
 **Using ViewItem**
 
-* Create a class which implements ViewItem<ViewItemRepresentable> and pass the model which we created in the previous step, also pass the layout id, the model from the constructor to the interface constructor and finally implement the bind function of the interface
+* Create a class which implements ViewItem and pass the model which we created in the previous step, also pass the layout id, the model from the constructor to the view item constructor and finally implement the bind function
 
 ```kotlin
-class ProductViewItem(private val model: Product) : ViewItem<ViewItemRepresentable>(R.layout.item_product, model) {
+class ProductViewItem(private val model: Product) : ViewItem(R.layout.item_product, model) {
 
     override fun hashCode(): Int {
         return model.id
@@ -113,11 +115,11 @@ android {
 }
 ```
 
-* Then, create a class which implements BindingViewItem<ViewItemRepresentable, ViewDataBinding> and pass the model which we created in the previous step, also pass the layout id, the model from the constructor to the interface constructor. The second generic parameter is of type ViewDataBinding, which is the class that is automtically generated when you enable dataBinding and create an XML built over DataBinding.
+* Then, create a class which implements BindingViewItem<ViewDataBinding> and pass the model which we created in the previous step, also pass the layout id, the model from the constructor to the data binding view item constructor. The generic parameter is of type ViewDataBinding, which is the class that is automtically generated when you enable dataBinding and create an XML built over DataBinding.
 Given that you have created an XML named "item_product" the generated class name will be "ItemProductBinding"
 
 ```kotlin
-class ProductViewItem(private val model: Product) : BindingViewItem<ViewItemRepresentable, ItemProductBinding>(R.layout.item_product, model) {
+class ProductViewItem(private val model: Product) : BindingViewItem<ItemProductBinding>(R.layout.item_product, model) {
     
     override fun hashCode(): Int {
         return model.id
@@ -132,18 +134,19 @@ class ProductViewItem(private val model: Product) : BindingViewItem<ViewItemRepr
 **Or create a ViewItem (for header or footer) which has no implementation and to be used directly without the next step**
 
 ```kotlin
-class FooterViewItem : ViewItem<ViewItemRepresentable>(R.layout.item_footer)
+class FooterViewItem : ViewItem(R.layout.item_footer)
 ```
 
 ```kotlin
-class FooterViewItem : BindingViewItem<ViewItemRepresentable, SomeBindingClass>(R.layout.item_footer)
+class FooterViewItem : BindingViewItem<SomeBindingClass>(R.layout.item_footer)
 ```
 
 * Now, go back to your original model and return this view item on the overriden viewItem variable
 
 ```kotlin
 class Product(val id: Int, val title: String, val date: String): ViewItemRepresentable {
-    override val viewItem: AbstractViewItem<ViewItemRepresentable>
+
+    override val viewItem: AbstractViewItem
         get() = ProductViewItem(this)
 	
     //to take the advantage of indexOf function in RecyclerViewBuilder
@@ -268,4 +271,3 @@ Please, don't hesitate to [file an issue](https://github.com/amrreda1995/Recycle
 ## License
 
 RecyclerViewBuilder is released under the MIT license. [See LICENSE](https://github.com/amrreda1995/RecyclerviewBuilder/blob/master/LICENSE) for details.
-

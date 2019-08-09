@@ -9,6 +9,6 @@ class BindingProfilePicture(
     var user: User = User("Cristian Bale"),
     var profilePicture: Int = R.drawable.avatar
 ) : ViewItemRepresentable, Post(time = "Mar 9 at 10:05 PM") {
-    override val viewItem: AbstractViewItem<ViewItemRepresentable>
+    override val viewItem: AbstractViewItem
         get() = ProfilePictureBindingViewItem(this)
 }

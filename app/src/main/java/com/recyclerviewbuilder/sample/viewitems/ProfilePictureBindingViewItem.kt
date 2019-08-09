@@ -12,7 +12,7 @@ import com.recyclerviewbuilder.sample.models.BindingProfilePicture
 
 class ProfilePictureBindingViewItem(
     val model: BindingProfilePicture
-) : BindingViewItem<ViewItemRepresentable, ItemBindingChangeProfilePictureBinding>(
+) : BindingViewItem<ItemBindingChangeProfilePictureBinding>(
     R.layout.item_binding_change_profile_picture, model
 ) {
     override fun bind(binding: ItemBindingChangeProfilePictureBinding, viewItemPosition: Int) {

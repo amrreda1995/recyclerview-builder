@@ -1,6 +1,7 @@
 package com.recyclerviewbuilder.sample
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
@@ -50,10 +51,24 @@ class MainActivity : AppCompatActivity() {
                         withContext(Dispatchers.Main) {
                             //                      recyclerViewBuilderFactory.setViewItems(viewItems = ArrayList(models.map { it.viewItem }))
                             viewItems.value = ViewItemsObserver(ArrayList(models.map { it.viewItem }))
-                            this@launch
                         }
                     }
                 }.startLoading()
+                .setOnItemClick { itemView, model, position ->
+                    when(model) {
+                        is ImageAndContent -> {
+                            Toast.makeText(this, "Post content: ${model.content}", Toast.LENGTH_SHORT).show()
+                        }
+
+                        is Images -> {
+
+                        }
+
+                        is ProfilePicture -> {
+
+                        }
+                    }
+                }
 
         CoroutineScope(Dispatchers.IO).launch {
             delay(2000)
@@ -61,7 +76,6 @@ class MainActivity : AppCompatActivity() {
             withContext(Dispatchers.Main) {
                 //              recyclerViewBuilderFactory.setViewItems(viewItems = ArrayList(models.map { it.viewItem }))
                 viewItems.value = ViewItemsObserver(ArrayList(models.map { it.viewItem }))
-                this@launch
             }
         }
     }

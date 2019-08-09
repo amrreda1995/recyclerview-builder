@@ -16,6 +16,6 @@ class Images(
         R.drawable.img_6
     )
 ) : ViewItemRepresentable, Post(time = "Mar 9 at 9:10 PM") {
-    override val viewItem: AbstractViewItem<ViewItemRepresentable>
+    override val viewItem: AbstractViewItem
         get() = ImagesViewItem(this)
 }
