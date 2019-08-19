@@ -74,7 +74,7 @@ abstract class AbstractRecyclerViewBuilder {
     abstract fun setEmptyAdapter(): RecyclerViewBuilder
 
     abstract fun setViewItems(
-        viewItemsArrayList: ViewItemArrayList,
+        viewItemsArrayList: ArrayList<AbstractViewItem>,
         clearsOnSet: Boolean = false,
         appendToEnd: Boolean = true
     ): RecyclerViewBuilder
@@ -97,7 +97,7 @@ abstract class AbstractRecyclerViewBuilder {
     ): RecyclerViewBuilder
 
     protected abstract fun setAdapterViewItems(
-        viewItemsArrayList: ViewItemArrayList,
+        viewItemsArrayList: ArrayList<AbstractViewItem>,
         clearsOnSet: Boolean = false,
         appendToEnd: Boolean = true
     )

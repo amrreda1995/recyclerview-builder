@@ -5,9 +5,6 @@ import androidx.lifecycle.*
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-typealias _ViewItemRepresentable = AbstractViewItem
-typealias ViewItemArrayList = ArrayList<_ViewItemRepresentable>
-
 open class RecyclerViewBuilder(
     private val recyclerView: RecyclerView,
     private var isDataBindingEnabled: Boolean,
@@ -262,7 +259,7 @@ open class RecyclerViewBuilder(
     }
 
     override fun setViewItems(
-        viewItemsArrayList: ViewItemArrayList,
+        viewItemsArrayList: ArrayList<AbstractViewItem>,
         clearsOnSet: Boolean,
         appendToEnd: Boolean
     ): RecyclerViewBuilder {
@@ -305,7 +302,7 @@ open class RecyclerViewBuilder(
     }
 
     override fun setAdapterViewItems(
-        viewItemsArrayList: ViewItemArrayList,
+        viewItemsArrayList: ArrayList<AbstractViewItem>,
         clearsOnSet: Boolean,
         appendToEnd: Boolean
     ) {

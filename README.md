@@ -19,6 +19,7 @@ If you end up using RecyclerViewBuilder in production, I'd love to hear from you
 [v1.2.0](https://github.com/amrreda1995/recyclerview-builder/blob/master/changelogs/Changelog-v1.2.0.md)
 [v1.2.1](https://github.com/amrreda1995/recyclerview-builder/blob/master/changelogs/Changelog-v1.2.1.md)
 [v2.0.0](https://github.com/amrreda1995/recyclerview-builder/blob/master/changelogs/Changelog-v2.0.0.md)
+[v2.0.1](https://github.com/amrreda1995/recyclerview-builder/blob/master/changelogs/Changelog-v2.0.1.md)
 
 ## Preview
 
@@ -50,7 +51,7 @@ android {
 }
 
 dependencies {
-     implementation 'com.github.amrreda1995:recyclerview-builder:2.0.0'
+     implementation 'com.github.amrreda1995:recyclerview-builder:2.0.1'
 }
 ```
 ### Without Jitpack

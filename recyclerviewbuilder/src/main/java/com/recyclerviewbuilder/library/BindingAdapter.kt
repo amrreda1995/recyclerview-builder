@@ -8,7 +8,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 
 class BindingAdapter : RecyclerView.Adapter<BindingAdapter.BindingViewHolder>(), BaseAdapterInterface {
-    override var viewItemsArrayList = ViewItemArrayList()
+    override var viewItemsArrayList = ArrayList<AbstractViewItem>()
 
     private var onItemClickBlock: ((View, ViewItemRepresentable?, Int) -> Unit)? = null
     private var onItemLongClickBlock: ((View, ViewItemRepresentable?, Int) -> Unit)? = null

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 class Adapter : RecyclerView.Adapter<Adapter.ViewHolder>(), BaseAdapterInterface {
-    override var viewItemsArrayList = ViewItemArrayList()
+    override var viewItemsArrayList = ArrayList<AbstractViewItem>()
 
     private var onItemClickBlock: ((View, ViewItemRepresentable?, Int) -> Unit)? = null
     private var onItemLongClickBlock: ((View, ViewItemRepresentable?, Int) -> Unit)? = null

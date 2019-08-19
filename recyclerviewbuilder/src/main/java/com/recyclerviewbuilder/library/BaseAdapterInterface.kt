@@ -3,7 +3,7 @@ package com.recyclerviewbuilder.library
 import android.view.View
 
 interface BaseAdapterInterface {
-    var viewItemsArrayList: ViewItemArrayList
+    var viewItemsArrayList: ArrayList<AbstractViewItem>
 
     fun notifyDataSetChanged()
     fun notifyItemChanged(position: Int)
