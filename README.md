@@ -95,6 +95,7 @@ class Product(val id: Int, val title: String, val date: String): ViewItemReprese
 ```kotlin
 class ProductViewItem(private val model: Product) : ViewItem(R.layout.item_product, model) {
 
+    //recommended to have stable ids for your view items
     override fun hashCode(): Int {
         return model.id
     }
@@ -122,6 +123,7 @@ Given that you have created an XML named "item_product" the generated class name
 ```kotlin
 class ProductViewItem(private val model: Product) : BindingViewItem<ItemProductBinding>(R.layout.item_product, model) {
     
+    //recommended to have stable ids for your view items
     override fun hashCode(): Int {
         return model.id
     }
