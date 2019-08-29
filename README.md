@@ -257,7 +257,7 @@ class MainActivity : AppCompatActivity() {
   * Clone the repo using `git clone https://github.com/amrreda1995/recyclerview-builder.git`
   * Navigate to the cloned folder
   * Open it in the android studio
-  * Build and run to see it in action (It also includes multiple view items if you want to expirement around with it!
+  * Build and run to see it in action (It also includes multiple view items if you want to expirement around with it!)
 
 
 ## About RecyclerViewBuilder
